@@ -15,18 +15,27 @@ class LoginScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
-      loginEmails: [ 'kiruthika@calibraint.com', 'test@calibraint.com' ]
+      error: '',
+      loginEmails: [ 'kiruthika@calibraint.com', 'test@calibraint.com' ],
+      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      passwordRegex: /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+$/i //alphanumeric
     }
   }
 
   onClickLogin = () => {
-    if (this.state.loginEmails.includes(this.state.email) && this.state.password === '123456') {
-      this.setState({ email: '', password: '', showError: false });
-      Navigator.navigate('DashboardScreen');
+    if (this.state.loginEmails.includes(this.state.email) && this.state.password === 'Test1234$') {
+      this.setState({ email: '', password: '', error: '' });
+      return Navigator.navigate('DashboardScreen');
     } else {
-      this.setState({ showError: true }, () => {
+      let error = 'Invalid Email/Password';
+      if (this.state.email === '' || !this.state.emailRegex.test(this.state.email)) {
+        error = 'Invalid Email';
+      } else if (this.state.password === ''|| !this.state.passwordRegex.test(this.state.password)) {
+        error = 'Password should be alphanumeric';
+      }
+      this.setState({ error }, () => {
         setTimeout(() => {
-          this.setState({ showError: false });
+          this.setState({ error: '' });
         }, 2000)
       })
     }
@@ -39,10 +48,10 @@ class LoginScreen extends React.Component {
           <LogoSvgToJSX height='100%' width='40%'/>
         </View>
         {
-          this.state.showError &&
+          this.state.error !== '' &&
           <View style={Style.forgotTextContainer}>
             <Text style={[ Style.forgotText, { color: Colors.error }]}>
-              Invalid Email/Password
+              { this.state.error }
             </Text>
           </View>
         }
