@@ -38,6 +38,18 @@ export default StyleSheet.create({
     lineHeight: RF(2.3),
     borderRadius: 5
   },
+  errorTextContainer: {
+    height: hp(4.1),
+    marginHorizontal: wp(12.53),
+    marginTop: hp(1.72)
+  },
+  errorText: {
+    color: Colors.error,
+    fontFamily: 'GothamRounded-Medium',
+    fontSize: RF(1.8),
+    lineHeight: RF(1.9),
+    flexWrap: 'wrap'
+  },
   forgotTextContainer: {
     height: hp(2.1),
     marginHorizontal: wp(12.53),

@@ -25,13 +25,13 @@ class LoginScreen extends React.Component {
   onClickLogin = () => {
     if (this.state.loginEmails.includes(this.state.email) && this.state.password === 'Test1234$') {
       this.setState({ email: '', password: '', error: '' });
-      return Navigator.navigate('DashboardScreen');
+      return Navigator.navigateAndReset('DashboardScreen');
     } else {
       let error = 'Invalid Email/Password';
       if (this.state.email === '' || !this.state.emailRegex.test(this.state.email)) {
         error = 'Invalid Email';
-      } else if (this.state.password === ''|| !this.state.passwordRegex.test(this.state.password)) {
-        error = 'Password should be alphanumeric';
+      } else if ((this.state.password === '') || (this.state.password.length < 8) || !this.state.passwordRegex.test(this.state.password)) {
+        error = 'Password should have at least 8 alphanumeric characters';
       }
       this.setState({ error }, () => {
         setTimeout(() => {
@@ -49,8 +49,8 @@ class LoginScreen extends React.Component {
         </View>
         {
           this.state.error !== '' &&
-          <View style={Style.forgotTextContainer}>
-            <Text style={[ Style.forgotText, { color: Colors.error }]}>
+          <View style={Style.errorTextContainer}>
+            <Text style={Style.errorText}>
               { this.state.error }
             </Text>
           </View>

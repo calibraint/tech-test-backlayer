@@ -10,6 +10,7 @@ export default {
   // Example colors:
   text: '#898989',
   primary: '#31C5C3',
+  primary2: '#3AD1BF',
   success: '#28a745',
   error: '#dc3545',
   white: '#FFFFFF'
