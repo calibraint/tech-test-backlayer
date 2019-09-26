@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { Text, View, TouchableOpacity, TextInput, MaskedViewIOS } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import Style from './DashboardScreenStyle'
@@ -8,7 +8,6 @@ import Colors from '../../Theme/Colors'
 import Header from '../../Components/Header'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 import LinearGradient from 'react-native-linear-gradient'
-import SegmentedControlTab from "react-native-segmented-control-tab";
 import SearchSvgToJSX from '../../SvgComponents/Search'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -172,11 +171,25 @@ class DashboardScreen extends React.Component {
     this.setState({ modifiedJsonData });
   }
 
-  renderGradientView = (category, smallSize, selected) => {
+  renderGradientView = (category, smallSize) => {
     return (
       <LinearGradient colors={this.state.categoryGradients[category]} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }} style={ smallSize ? Style.smallGradientCircle : Style.gradientCircle}>
         <Text style={ smallSize ? Style.smallGradientText : Style.gradientText}>{category === 'All' ? 'A' : category}</Text>
       </LinearGradient>
+    )
+  }
+
+  renderTextGradientView = (category, smallSize) => {
+    return (
+      <View style={smallSize ? Style.smallGradientCircle : Style.gradientCircle}>
+        <View style={{ position: 'absolute' }}>
+          <MaskedViewIOS maskElement={<Text style={smallSize ? Style.smallGradientText : Style.gradientText}>{category === 'All' ? 'A' : category}</Text>}>
+            <LinearGradient colors={this.state.categoryGradients[category]} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }} style={ smallSize ? Style.smallGradientCircle : Style.gradientCircle}>
+              <Text style={[ smallSize ? Style.smallGradientText : Style.gradientText, { opacity: 0 } ]}>{category === 'All' ? 'A' : category}</Text>
+            </LinearGradient>
+          </MaskedViewIOS>
+        </View>
+      </View>
     )
   }
 
@@ -199,7 +212,7 @@ class DashboardScreen extends React.Component {
                 return (
                   <TouchableOpacity
                     key={`category${category.key}`}
-                    style={[ Style.sliderCategory, category.key === this.state.selectedCategory &&  { backgroundColor: Colors.primary2, width: category.key === 'All' ? wp(9.6) : 'auto' }]}
+                    style={[ Style.sliderCategory, category.key === this.state.selectedCategory &&  { backgroundColor: Colors.primary2 }]}
                     onPress={() => { this.setState({ selectedCategory: category.key })}}
                   >
                     <Text style={[ Style.sliderCategoryText, category.key === this.state.selectedCategory &&  { color: Colors.white } ]}>{category.name}</Text>
@@ -225,7 +238,7 @@ class DashboardScreen extends React.Component {
                 return (
                   <TouchableOpacity
                     key={`filter${filter.key}`}
-                    style={[ Style.sliderCategory, filter.key === this.state.selectedFilter &&  { backgroundColor: Colors.primary2, width: filter.key === 'All' ? wp(9.6) : 'auto' }]}
+                    style={[ Style.sliderCategory, filter.key === this.state.selectedFilter &&  { backgroundColor: Colors.primary2 }]}
                     onPress={() => { this.setState({ selectedFilter: filter.key })}}
                   >
                     <Text style={[ Style.sliderCategoryText, filter.key === this.state.selectedFilter &&  { color: Colors.white } ]}>{filter.name}</Text>
@@ -240,7 +253,7 @@ class DashboardScreen extends React.Component {
                 return (
                   <View key={`data:${index}`}style={[ Style.rowItem, data.category === this.state.selectedCategory && { backgroundColor: Colors.primary2 }]}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                      { this.renderGradientView(data.category, true, data.category === this.state.selectedCategory) }
+                      { (data.category === this.state.selectedCategory) ? this.renderTextGradientView(data.category, true) : this.renderGradientView(data.category, true) }
                       <View><Text style={[ Style.rowItemText, data.category === this.state.selectedCategory && { color: Colors.white } ]}>Value</Text></View>
                     </View>
                     <View><Text style={ [ Style.rowItemText, data.category === this.state.selectedCategory && { color: Colors.white }]}>{ data.balance }</Text></View>

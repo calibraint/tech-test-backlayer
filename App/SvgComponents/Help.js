@@ -3,39 +3,21 @@ import { SvgXml } from 'react-native-svg';
 
 export default function HelpSvgToJSX() {
   const xml = `
-  <svg
+    <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="49"
-      height="49"
-      fill="none"
-      viewBox="0 0 49 49"
+      width="37"
+      height="37"
+      viewBox="0 0 37 37"
     >
-      <g filter="url(#filter0_d)">
-        <circle cx="24.5" cy="21.5" r="18.5" fill="#31C5C3" />
+      <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1">
+        <circle cx="18.5" cy="18.5" r="18.5" fill="#31C5C3" />
+        <path
+          fill="#FFF"
+          d="M4.23 15.994c.019-1.162.15-2.08.395-2.754.244-.674.742-1.42 1.494-2.241l1.92-1.978c.82-.927 1.23-1.923 1.23-2.988 0-1.025-.269-1.826-.806-2.402-.537-.586-1.318-.879-2.344-.879-.996 0-1.797.264-2.402.791-.606.527-.908 1.235-.908 2.124H.099c.02-1.582.58-2.856 1.684-3.823C2.896.867 4.342.379 6.12.379c1.846 0 3.281.498 4.307 1.494 1.035.986 1.553 2.344 1.553 4.072 0 1.71-.791 3.394-2.374 5.054L8.01 12.581c-.713.791-1.07 1.929-1.07 3.413H4.23zm-.118 4.644c0-.44.132-.806.396-1.099.273-.303.674-.454 1.201-.454s.928.151 1.201.454c.274.293.41.66.41 1.099 0 .44-.136.805-.41 1.098-.273.284-.674.425-1.201.425s-.928-.142-1.201-.425c-.264-.293-.396-.659-.396-1.098z"
+          transform="translate(13 7)"
+        />
       </g>
-      <defs>
-        <filter
-          id="filter0_d"
-          width="49"
-          height="49"
-          x="0"
-          y="0"
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          />
-          <feOffset dy="3" />
-          <feGaussianBlur stdDeviation="3" />
-          <feColorMatrix values="0 0 0 0 0.227451 0 0 0 0 0.819608 0 0 0 0 0.74902 0 0 0 0.3 0" />
-          <feBlend in2="BackgroundImageFix" result="effect1_dropShadow" />
-          <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-        </filter>
-      </defs>
     </svg>
 	`;
-	return <SvgXml xml={xml} width="20%" height="60%" />
+	return <SvgXml xml={xml} width="20%" height="43%" />
 }

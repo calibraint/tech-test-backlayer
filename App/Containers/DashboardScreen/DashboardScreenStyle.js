@@ -46,7 +46,7 @@ export default StyleSheet.create({
     height: wp(12),
     width: wp(12),
     borderRadius: wp(12)/2,
-    backgroundColor: 'red',
+    backgroundColor: Colors.white,
     marginRight: 2,
     alignItems: 'center',
     justifyContent: 'center'
@@ -55,13 +55,14 @@ export default StyleSheet.create({
     fontFamily: 'GothamRounded-Bold',
     fontSize: RF(4.2),
     lineHeight: RF(6.2),
-    color: Colors.white
+    color: Colors.white,
+    textAlign: 'center'
   },
   smallGradientCircle: {
     height: wp(8),
     width: wp(8),
     borderRadius: wp(8)/2,
-    backgroundColor: 'red',
+    backgroundColor: Colors.white,
     marginRight: 2,
     alignItems: 'center',
     justifyContent: 'center'
@@ -70,7 +71,8 @@ export default StyleSheet.create({
     fontFamily: 'GothamRounded-Bold',
     fontSize: RF(2.2),
     lineHeight: RF(4.2),
-    color: Colors.white
+    color: Colors.white,
+    textAlign: 'center'
   },
   sliderStyle: {
     height: hp(3.89),
@@ -89,12 +91,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F2F2F2',
     borderRadius: 20,
-    padding: wp(1.2)
+    paddingHorizontal: wp(2.5)
   },
   sliderCategoryText: {
     fontFamily: 'GothamRounded-Medium',
     fontSize: RF(1.1),
-    lineHeight: RF(2),
+    lineHeight: RF(3),
     letterSpacing: 0,
     textAlign: 'center',
     color: Colors.primary2,
