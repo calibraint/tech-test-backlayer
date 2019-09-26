@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, TextInput, MaskedViewIOS } from 'react-native'
+import { Text, View, TouchableOpacity, TextInput, MaskedViewIOS, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import Style from './DashboardScreenStyle'
@@ -197,63 +197,64 @@ class DashboardScreen extends React.Component {
     return (
       <View style={Style.container}>
         <Header />
-        <View style={Style.portfolioCard}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: wp(13.33) }}>
-            <View style={Style.dot}></View>
-            <Text style={Style.portfolioText}>Your Portfolio</Text>
+        <ScrollView>
+          <View style={Style.portfolioCard}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: wp(13.33) }}>
+              <View style={Style.dot}></View>
+              <Text style={Style.portfolioText}>Your Portfolio</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: hp(10.83), paddingLeft: wp(10.13)  }}>
+              { this.renderGradientView(this.state.selectedCategory) }
+              <View style={{ justifyContent: 'center'}}><Text style={Style.priceText}>3,700.25</Text></View>
+            </View>
+            <View style={Style.sliderStyle}>
+              {
+                this.state.categories.map(category => {
+                  return (
+                    <TouchableOpacity
+                      key={`category${category.key}`}
+                      style={[ Style.sliderCategory, category.key === this.state.selectedCategory &&  { backgroundColor: Colors.primary2 }]}
+                      onPress={() => { this.setState({ selectedCategory: category.key })}}
+                    >
+                      <Text style={[ Style.sliderCategoryText, category.key === this.state.selectedCategory &&  { color: Colors.white } ]}>{category.name}</Text>
+                    </TouchableOpacity>
+                  )
+                })
+              }
+            </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: hp(2), height: hp(7.83), paddingLeft: wp(10.13)  }}>
-            { this.renderGradientView(this.state.selectedCategory) }
-            <View style={{ justifyContent: 'center'}}><Text style={Style.priceText}>3,700.25</Text></View>
+          <View style={Style.searchSection}>
+              <TextInput
+                  style={Style.searchInput}
+                  placeholder="Search Value..."
+                  placeholderTextColor='#B3B3B3'
+                  onChangeText={(searchText) => { this.setState({ searchText }) }}
+                  underlineColorAndroid="transparent"
+              />
+              <View style={Style.searchSvgContainer}><SearchSvgToJSX /></View>
           </View>
-          <View style={Style.sliderStyle}>
-            {
-              this.state.categories.map(category => {
-                return (
-                  <TouchableOpacity
-                    key={`category${category.key}`}
-                    style={[ Style.sliderCategory, category.key === this.state.selectedCategory &&  { backgroundColor: Colors.primary2 }]}
-                    onPress={() => { this.setState({ selectedCategory: category.key })}}
-                  >
-                    <Text style={[ Style.sliderCategoryText, category.key === this.state.selectedCategory &&  { color: Colors.white } ]}>{category.name}</Text>
-                  </TouchableOpacity>
-                )
-              })
-            }
+          <View style={[ Style.sliderStyle, { marginTop: hp(4.1) } ]}>
+              {
+                this.state.filters.map(filter => {
+                  return (
+                    <TouchableOpacity
+                      key={`filter${filter.key}`}
+                      style={[ Style.sliderCategory, filter.key === this.state.selectedFilter &&  { backgroundColor: Colors.primary2 }]}
+                      onPress={() => { this.setState({ selectedFilter: filter.key })}}
+                    >
+                      <Text style={[ Style.sliderCategoryText, filter.key === this.state.selectedFilter &&  { color: Colors.white } ]}>{filter.name}</Text>
+                    </TouchableOpacity>
+                  )
+                })
+              }
           </View>
-        </View>
-        <View style={Style.searchSection}>
-            <TextInput
-                style={Style.searchInput}
-                placeholder="Search Value..."
-                placeholderTextColor='#B3B3B3'
-                onChangeText={(searchText) => { this.setState({ searchText }) }}
-                underlineColorAndroid="transparent"
-            />
-            <View style={Style.searchSvgContainer}><SearchSvgToJSX /></View>
-        </View>
-        <View style={[ Style.sliderStyle, { marginTop: hp(4.1) } ]}>
-            {
-              this.state.filters.map(filter => {
-                return (
-                  <TouchableOpacity
-                    key={`filter${filter.key}`}
-                    style={[ Style.sliderCategory, filter.key === this.state.selectedFilter &&  { backgroundColor: Colors.primary2 }]}
-                    onPress={() => { this.setState({ selectedFilter: filter.key })}}
-                  >
-                    <Text style={[ Style.sliderCategoryText, filter.key === this.state.selectedFilter &&  { color: Colors.white } ]}>{filter.name}</Text>
-                  </TouchableOpacity>
-                )
-              })
-            }
-          </View>
-          <ScrollView style={{ marginTop: hp(1.5) }}>
+          <View style={{ marginTop: hp(1.5) }}>
             {
               this.state.modifiedJsonData.map((data, index) => {
                 return (
                   <View key={`data:${index}`}style={[ Style.rowItem, data.category === this.state.selectedCategory && { backgroundColor: Colors.primary2 }]}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                      { (data.category === this.state.selectedCategory) ? this.renderTextGradientView(data.category, true) : this.renderGradientView(data.category, true) }
+                      { (data.category === this.state.selectedCategory) && Platform.OS === 'ios' ? this.renderTextGradientView(data.category, true) : this.renderGradientView(data.category, true) }
                       <View><Text style={[ Style.rowItemText, data.category === this.state.selectedCategory && { color: Colors.white } ]}>Value</Text></View>
                     </View>
                     <View><Text style={ [ Style.rowItemText, data.category === this.state.selectedCategory && { color: Colors.white }]}>{ data.balance }</Text></View>
@@ -261,7 +262,8 @@ class DashboardScreen extends React.Component {
                 )
               })
             }
-          </ScrollView>
+          </View>
+        </ScrollView>
       </View>
     )
   }

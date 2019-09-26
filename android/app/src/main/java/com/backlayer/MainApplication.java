@@ -46,11 +46,4 @@ public class MainApplication extends Application implements ReactApplication {
     SoLoader.init(this, /* native exopackage */ false);
   }
 
-  @Override
-  protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new LinearGradientPackage() // <---- and This! 
-    );
-  }
 }

@@ -30,9 +30,11 @@ export default StyleSheet.create({
     paddingLeft: wp(2)
   },
   priceText: {
+    height: hp(8),
+    marginTop: hp(1),
     fontFamily: 'GothamRounded-Bold',
-    fontSize: RF(8),
-    lineHeight: RF(10),
+    fontSize: RF(7.9),
+    lineHeight: RF(8),
     letterSpacing: -3,
     color: '#3AD1BF'
   },
